@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100b08">
+<meta name="description" content="A little warmth. A living, procedural wood fire with the sound of burning logs. Make it yours and share the flame.">
+<title>Hearth · A little warmth</title>
+<link rel="icon" href="data:,">
+<style>
+:root{color-scheme:dark;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eee4d7;background:#080605;font-synthesis:none;--accent:#e9ad6b;--dim:#b6a798}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}button,input,select{font:inherit}button{color:inherit;cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:5px}button{border:1px solid #c3a68330;border-radius:7px;background:#d7ae7510;transition:background .2s,border-color .2s}button:hover{background:#d7ae7525;border-color:#d5ad7955}button:active{background:#d7ae7540}canvas{position:fixed;inset:0;width:100%;height:100%;display:block}body.idle,body.idle *{cursor:none!important}.brand{position:fixed;top:max(30px,env(safe-area-inset-top));left:max(36px,env(safe-area-inset-left));pointer-events:none;transition:opacity 1s}.brand b{font:400 27px Georgia,serif;letter-spacing:.055em}.brand span{display:block;font-size:9px;letter-spacing:.29em;text-transform:uppercase;color:#b29d83;margin-top:8px}.top-actions{position:fixed;right:max(28px,env(safe-area-inset-right));top:max(27px,env(safe-area-inset-top));display:flex;gap:8px;transition:opacity .8s}.icon-button{display:grid;place-items:center;width:40px;height:40px;background:#110d09aa;backdrop-filter:blur(14px)}svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.icon-button[aria-pressed=true]{color:var(--accent)}.idle .brand,.idle .top-actions,.idle .hint{opacity:0;pointer-events:none}
+#gate{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 56%,#1b100025,#08060555 75%);transition:opacity 1.2s,visibility 1.2s;z-index:5}#gate.lit{opacity:0;visibility:hidden;pointer-events:none}.invitation{text-align:center;margin-top:-7vh;text-shadow:0 3px 30px #000}.eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#d0b08a}.invitation h1{font:400 clamp(42px,6vw,76px)/1.1 Georgia,serif;margin:18px 24px 14px;letter-spacing:-.025em}.invitation p{font-size:13px;color:#c0b09e;letter-spacing:.02em}.light-button{padding:15px 26px;margin-top:22px;border-color:#e3b27965;background:#20150bd9;box-shadow:0 0 45px #e6780d0a;font-size:12px;letter-spacing:.05em;display:inline-flex;align-items:center;gap:11px}.light-button svg{color:#f3bd79}.invitation small{display:block;font-size:10px;color:#aa9682;letter-spacing:.06em;margin-top:19px}
+#panel{position:fixed;right:24px;top:83px;bottom:65px;width:280px;max-height:720px;padding:23px 22px 18px;border:1px solid #e8c9a31c;border-radius:12px;background:linear-gradient(140deg,#211b16e8,#12100eeb);backdrop-filter:blur(22px);box-shadow:0 15px 80px #0005;overflow:auto;scrollbar-width:thin;scrollbar-color:#705b4133 transparent;transition:transform .65s cubic-bezier(.22,1,.36,1),opacity .5s;z-index:3}body:not(.started) #panel,body:not(.started) .top-actions{opacity:0;pointer-events:none}.panel-hidden #panel,.idle #panel{transform:translateX(calc(100% + 40px));opacity:0;pointer-events:none}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:19px}.panel-head h2{font:400 23px Georgia,serif;margin:0}.close-button{background:none;border:0;padding:5px;color:#aa9988}.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:23px}.presets button{font-size:11px;padding:9px 0;color:#bcae9e}.presets button.active{background:#d7a66d1f;border-color:#dab17c5c;color:#f0cc9b}.control{margin:0 0 18px}.label-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;font-size:11px;color:#d4c5b3;letter-spacing:.02em}.label-row output{font-size:10px;color:#a68f75;font-variant-numeric:tabular-nums}input[type=range]{display:block;width:100%;margin:0;height:14px;appearance:none;background:transparent;cursor:pointer;accent-color:var(--accent)}input[type=range]::-webkit-slider-runnable-track{height:2px;border-radius:2px;background:linear-gradient(to right,#d8a56d var(--fill,50%),#84705d40 var(--fill,50%))}input[type=range]::-moz-range-track{height:2px;background:#84705d40}input[type=range]::-moz-range-progress{height:2px;background:#d8a56d}input[type=range]::-webkit-slider-thumb{appearance:none;width:10px;height:10px;border-radius:50%;background:#e4b984;margin-top:-4px;box-shadow:0 0 0 4px #dfb57c09}input[type=range]::-moz-range-thumb{width:10px;height:10px;border:0;border-radius:50%;background:#e4b984}select{width:100%;border:1px solid #bda27e2c;border-radius:6px;padding:9px 10px;color:#dccdbb;background:#100d0a;font-size:11px;cursor:pointer}.selects{display:grid;grid-template-columns:1fr 1fr;gap:12px}.selects .label-row{margin-bottom:8px}.divider{height:1px;background:#d2b28f19;margin:5px 0 18px}.burn-row{display:flex;align-items:center;justify-content:space-between;font-size:11px;margin-bottom:12px;color:#d4c5b3}.switch{position:relative;display:inline-block;width:30px;height:17px}.switch input{opacity:0;position:absolute;width:100%;height:100%;margin:0;cursor:pointer}.switch span{display:block;width:30px;height:17px;border-radius:15px;background:#6b5d4b55;pointer-events:none;transition:background .3s}.switch span:after{content:"";position:absolute;width:11px;height:11px;top:3px;left:3px;border-radius:50%;background:#b49d84;transition:transform .3s,background .3s}.switch input:checked+span{background:#b77b3f70}.switch input:checked+span:after{transform:translateX(13px);background:#f0c28d}.switch input:focus-visible+span{outline:2px solid var(--accent);outline-offset:3px}.burn-info{font-size:10px;line-height:1.5;color:#9d8b77;margin:0 0 13px}#addLog{width:100%;padding:9px;font-size:11px;margin-bottom:19px}.sound-row{display:flex;gap:10px;align-items:center}.sound-row input{flex:1}.sound-row button{width:29px;height:27px;display:grid;place-items:center;background:none;border:0;color:#c6ae8f}.sound-row svg{width:16px;height:16px}.panel-footer{display:flex;align-items:center;justify-content:space-between;font-size:9px;color:#847361;letter-spacing:.03em;margin-top:5px}.panel-footer button{border:0;background:none;color:#c8a77d;font-size:10px;padding:4px 0}.hint{position:fixed;bottom:max(24px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#ac947270;white-space:nowrap;transition:opacity .8s;pointer-events:none}#toast{position:fixed;bottom:65px;left:50%;transform:translate(-50%,12px);font-size:12px;max-width:90vw;padding:12px 18px;color:#e8d1ae;border:1px solid #b99a6d33;border-radius:8px;background:#1d160fee;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:9}#toast.show{opacity:1;transform:translate(-50%,0)}#error{display:none;position:fixed;inset:0;z-index:20;background:#110c08;align-items:center;justify-content:center;text-align:center;padding:30px}#error h2{font:400 34px Georgia,serif}#error p{max-width:430px;color:#bda98f;line-height:1.7;font-size:14px}#error.visible{display:flex}
+@media(max-width:600px){.brand{left:22px;top:24px}.brand b{font-size:23px}.brand span{font-size:8px}.top-actions{right:16px;top:20px}.icon-button{width:36px;height:36px}#panel{right:12px;top:72px;bottom:48px;width:260px;padding:20px}.hint{font-size:8px;bottom:20px;letter-spacing:.09em}.invitation h1{font-size:48px}.invitation{margin-top:-10vh}}
+@media(max-height:600px){#panel{top:66px;bottom:16px;max-height:none}.brand{top:20px}.top-actions{top:16px}.hint{bottom:14px}.control{margin-bottom:15px}.invitation{margin-top:0}.invitation h1{font-size:44px;margin-top:13px}.light-button{margin-top:10px}}
+@media(prefers-reduced-motion:reduce){#panel,.brand,.top-actions,#gate{transition-duration:.1s}}
+</style>
+</head>
+<body class="panel-hidden">
+<canvas id="fire" aria-label="A living wood fire in a softly illuminated hearth"></canvas>
+<div class="brand"><b>hearth</b><span>A little warmth</span></div>
+<div class="top-actions" inert>
+<button class="icon-button" id="copyTop" title="Copy fire link" aria-label="Copy fire link"><svg viewBox="0 0 24 24"><path d="m10 13 4-4M8 15l-2 2a3.5 3.5 0 0 1-5-5l5-5a3.5 3.5 0 0 1 5 0m2 2 2-2a3.5 3.5 0 0 1 5 5l-5 5a3.5 3.5 0 0 1-5 0" transform="translate(1 0)"/></svg></button>
+<button class="icon-button" id="fullscreen" title="Fullscreen (F)" aria-label="Fullscreen"><svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button>
+<button class="icon-button" id="togglePanel" title="Fire settings (H)" aria-label="Fire settings" aria-expanded="false" aria-controls="panel"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="#17110c"/><circle cx="15" cy="12" r="2" fill="#17110c"/><circle cx="9" cy="18" r="2" fill="#17110c"/></svg></button>
+</div>
+<div id="gate"><div class="invitation"><div class="eyebrow">Settle in. Stay a while.</div><h1>A little warmth.</h1><p>No place to be. Nothing to do.</p><button id="light" class="light-button"><svg viewBox="0 0 24 24"><path d="M12 3c2 5-4 5-2 10 2-1 3-3 3-5 4 4 6 7 3 11-2 3-7 3-9 0-3-4 0-7 2-9-1 4 1 4 1 4"/></svg>Light the fire</button><small>Best with sound on</small></div></div>
+<aside id="panel" aria-label="Fire settings" inert>
+<div class="panel-head"><h2>Tend the fire</h2><button class="close-button" id="closePanel" title="Hide settings (H)" aria-label="Hide settings"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button></div>
+<div class="presets" aria-label="Fire presets"><button data-preset="roaring">Roaring</button><button data-preset="cozy" class="active">Cozy</button><button data-preset="embers">Embers</button></div>
+<div class="control"><div class="label-row"><label for="size">Fire size</label><output for="size" id="sizeValue"></output></div><input id="size" type="range" min="0" max="100" step="1"></div>
+<div class="control"><div class="label-row"><label for="logs">Amount of wood</label><output for="logs" id="logsValue"></output></div><input id="logs" type="range" min="1" max="6" step="1"></div>
+<div class="selects"><div class="control"><div class="label-row"><label for="material">Hearth</label></div><select id="material"><option value="0">Red brick</option><option value="1">Fieldstone</option><option value="2">Slate</option><option value="3">White marble</option><option value="4">Black iron</option></select></div><div class="control"><div class="label-row"><label for="wood">Wood</label></div><select id="wood"><option value="0">Oak</option><option value="1">Pine</option><option value="2">Birch</option><option value="3">Driftwood</option></select></div></div>
+<div class="control"><div class="label-row"><label for="crackle">Crackle</label><output for="crackle" id="crackleValue"></output></div><input id="crackle" type="range" min="0" max="100" step="1"></div>
+<div class="control"><div class="label-row"><label for="draft">Draft</label><output for="draft" id="draftValue"></output></div><input id="draft" type="range" min="0" max="100" step="1"></div>
+<div class="control"><div class="label-row"><label for="sparks">Sparks</label><output for="sparks" id="sparksValue"></output></div><input id="sparks" type="range" min="0" max="100" step="1"></div>
+<div class="control"><div class="label-row"><label for="room">Room brightness</label><output for="room" id="roomValue"></output></div><input id="room" type="range" min="0" max="100" step="1"></div>
+<div class="divider"></div>
+<div class="burn-row"><label for="burn">Burn down slowly</label><label class="switch"><input type="checkbox" id="burn" aria-label="Burn down slowly"><span></span></label></div><p class="burn-info" id="burnInfo">Keep it burning, or let it settle into embers.</p><button id="addLog">+ Add a log</button>
+<div class="control"><div class="label-row"><label for="volume">Volume</label><output for="volume" id="volumeValue"></output></div><div class="sound-row"><button id="mute" title="Mute (M)" aria-label="Mute" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M11 4 6 8H3v8h3l5 4zM15 8c3 2 3 6 0 8m3-11c5 4 5 10 0 14"/></svg></button><input id="volume" type="range" min="0" max="100" step="1"></div></div>
+<div class="panel-footer"><span>F fullscreen · H hide · M mute</span><button id="copy">Copy link ↗</button></div>
+</aside>
+<div class="hint">Make yourself at home · Move or tap for controls</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="error" role="alert"><div><h2>This hearth needs a little help.</h2><p id="errorMessage"></p></div></div>
+<script id="flameShader" type="x-shader/x-fragment">#version 300 es
+precision highp float;
+out vec4 fragColor;
+uniform vec2 uResolution;
+uniform float uTime,uFire,uLogs,uDraft,uSparks,uRoom,uLight,uMaterial,uWood;
+uniform vec4 uPops[6];
+uniform vec4 uWoodMix;
+float hash(float n){return fract(sin(n*127.1)*43758.5453);}
+float hash2(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
+vec2 hash22(vec2 p){vec3 q=fract(vec3(p.xyx)*vec3(.1031,.1030,.0973));q+=dot(q,q.yzx+33.33);return fract((q.xx+q.yz)*q.zy);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash2(i),hash2(i+vec2(1,0)),f.x),mix(hash2(i+vec2(0,1)),hash2(i+1.),f.x),f.y);}
+float fbm(vec2 p){float n=.52*noise(p);p=mat2(1.63,1.21,-1.21,1.63)*p;n+=.26*noise(p);p=mat2(1.71,1.18,-1.18,1.71)*p;n+=.13*noise(p);p=p*2.07+11.7;n+=.065*noise(p);return n;}
+float box(vec2 p,vec2 b){vec2 d=abs(p)-b;return length(max(d,0.))+min(max(d.x,d.y),0.);}
+float line(vec2 p,vec2 a,vec2 b){vec2 d=b-a;return length(p-a-d*clamp(dot(p-a,d)/dot(d,d),0.,1.));}
+vec3 temperature(float t){t=clamp(t,0.,1.);vec3 c=mix(vec3(.6,.025,.002),vec3(2.7,.33,.008),smoothstep(0.,.35,t));c=mix(c,vec3(4.7,1.65,.11),smoothstep(.25,.68,t));return mix(c,vec3(6.,4.6,1.9),smoothstep(.65,1.,t));}
+vec3 stone(vec2 p,float mat,float irradiance){
+ float grit=noise(p*135.)*.4+noise(p*43.)*.6;vec3 albedo;float joint=1.,relief=1.,shine=0.;
+ if(mat<.5){vec2 q=p*vec2(3.8,8.0);float row=floor(q.y);q.x+=mod(row,2.)*.5;vec2 id=floor(q),f=fract(q);vec2 edge=min(f,1.-f);joint=smoothstep(.013,.055,min(edge.x*.72,edge.y));float rnd=hash2(id);albedo=mix(vec3(.075,.058,.043),mix(vec3(.23,.069,.029),vec3(.42,.18,.081),rnd)*( .65+.5*grit),joint);relief=.76+.24*smoothstep(.02,.11,f.y);}
+ else if(mat<1.5){vec2 q=p*vec2(4.3,5.4),cell=floor(q);float d1=10.,d2=10.;vec2 chosen=vec2(0);for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){vec2 id=cell+vec2(i,j);vec2 o=vec2(i,j)+.18+.64*hash22(id)-fract(q);float d=dot(o,o);if(d<d1){d2=d1;d1=d;chosen=id;}else d2=min(d2,d);}joint=smoothstep(.012,.12,d2-d1);float rnd=hash2(chosen);albedo=mix(vec3(.04,.038,.033),mix(vec3(.18,.165,.13),vec3(.37,.325,.25),rnd)*(.65+.5*grit),joint);relief=.7+.3*noise(p*11.);}
+ else if(mat<2.5){vec2 q=p*vec2(2.1,9.5);q.x+=floor(q.y)*.371;vec2 f=fract(q);joint=smoothstep(.01,.045,min(min(f.x,1.-f.x),min(f.y,1.-f.y)));float stria=noise(vec2(p.x*17.,p.y*180.));albedo=mix(vec3(.023),vec3(.11,.125,.132)*(.6+grit*.7+stria*.4),joint);shine=.11;}
+ else if(mat<3.5){float vein=abs(sin(p.x*3.4+p.y*2.7+fbm(p*2.8)*7.+fbm(p*9.)*.7));float v=1.-smoothstep(.0,.11,vein);float faint=1.-smoothstep(.0,.24,vein);albedo=mix(vec3(.7,.68,.61),vec3(.23,.25,.24),v*.6+faint*.18)*( .92+.1*grit);vec2 f=fract(p*vec2(1.2,2.4));joint=smoothstep(.002,.01,min(min(f.x,1.-f.x),min(f.y,1.-f.y)));albedo*=.8+.2*joint;shine=.5;}
+ else {float brushed=noise(vec2(p.x*20.,p.y*270.));albedo=vec3(.043,.046,.048)*( .6+grit*.3+brushed*.5);vec2 f=fract(p*vec2(2.,2.8));float seam=smoothstep(.006,.018,min(min(f.x,1.-f.x),min(f.y,1.-f.y)));albedo*=.5+.5*seam;vec2 bolt=abs(f-.08);float rivet=1.-smoothstep(.012,.022,length(bolt));albedo+=rivet*.05;shine=.37;}
+ vec3 light=vec3(.13,.15,.19)*uRoom+vec3(1.,.43,.13)*irradiance;
+ return albedo*light*relief+vec3(1.,.43,.16)*pow(max(0.,irradiance*.32),2.)*shine;
+}
+vec3 hearth(vec2 p){
+ float glow=uLight;float opening=box(p-vec2(0,1.09),vec2(1.52,.96));float frontLight=glow*1.6/(.55+dot(p-vec2(0,.45),(p-vec2(0,.45))*vec2(.8,1.35)));
+ vec3 col=vec3(0.);if(opening>=0.)col=stone(p,uMaterial,frontLight*.65);
+ // Deep reveal, a soot-dark fireback, and the stone lip in front of the grate.
+ if(opening<.0){vec2 q=p;float sh=exp(-pow((p.y-.33)*1.6,2.))*glow;float soot=1.-.82*smoothstep(.5,1.9,p.y);col=stone(q,0.,sh*.28)*soot*.53;float side=smoothstep(1.29,1.52,abs(p.x));if(side>.001)col=mix(col,stone(vec2(abs(p.x)*2.5,p.y),uMaterial,frontLight*.42)*(.7+side*.2),side);float top=smoothstep(1.88,2.05,p.y);col*=1.-top*.65;col+=vec3(.013,.004,.001)*glow*exp(-length(p-vec2(0,.5))*2.);}
+ float rim=abs(opening);if(rim<.045){col=stone(p,uMaterial,frontLight*.8)*( .7+.3*smoothstep(0.,.045,rim));}
+ if(p.y<.13){float fy=.13-p.y;vec2 floorP=vec2(p.x/(1.+fy*.7),fy*1.8);float pool=exp(-abs(p.x)*1.15-fy*3.)*glow;col=stone(floorP,uMaterial,pool*.8)*(.6+.4*exp(-fy*5.));col+=vec3(.16,.041,.005)*pool*.2;if(p.y>.077)col*=.58;}
+ float shadow=exp(-pow((p.y-.18)*18.,2.))*exp(-pow(p.x*1.05,6.));col*=1.-shadow*.78;
+ return col;
+}
+vec3 logPiece(vec3 col,vec2 p,vec2 a,vec2 b,float r,float seed,float presence){
+ vec2 dir=normalize(b-a),normal=vec2(-dir.y,dir.x);float len=length(b-a);vec2 q=vec2(dot(p-a,dir),dot(p-a,normal));float taper=1.-.08*q.x/len;
+ float rough=noise(vec2(q.x*26.+seed,q.y*50.))* .010+noise(vec2(q.x*89.,seed))* .004;
+ float endWidth=.065+r*.35;float rd=r*taper+rough;
+ float bodyD=box(q-vec2(len*.5,0.),vec2(len*.5,rd));
+ float endShape=(length(vec2((q.x-len)/endWidth,q.y/rd))-1.)*rd;
+ float leftShape=(length(vec2(q.x/(endWidth*.65),q.y/(r+rough)))-1.)*r;
+ float d=min(bodyD,min(endShape,leftShape));float cover=(1.-smoothstep(-.003,.004,d))*presence;if(cover<.001)return col;
+ float cylindrical=sqrt(max(0.,1.-pow(q.y/(r*taper+.012),2.)));float grain=fbm(vec2(q.x*7.+seed,q.y*94.));float fissure=pow(1.-abs(sin(q.y*114.+noise(vec2(q.x*11.,q.y*40.))*6.+seed)),13.);
+ float cross=pow(1.-abs(sin(q.x*32.+noise(vec2(q.x*12.,q.y*50.+seed))*5.)),18.);
+ float char=noise(vec2(q.x*33.,q.y*43.)+seed);float burn=.25+.75*noise(vec2(q.x*4.+seed,q.y*20.));float pulse=.72+.28*sin(uTime*(1.2+seed*.03)+q.x*5.+seed);
+ float barkPlates=noise(vec2(q.x*19.,q.y*35.)+seed);float bevel=smoothstep(.18,.7,barkPlates);
+ vec3 bark=mix(vec3(.014,.008,.005),vec3(.12,.066,.029),grain)*(.16+pow(cylindrical,2.)*.84)*(.55+bevel*.6);
+ float birch=uWoodMix.z;float stripe=smoothstep(.7,.8,noise(vec2(q.x*38.,q.y*140.)+seed));bark=mix(bark,mix(vec3(.19,.17,.13),vec3(.012,.01,.008),stripe)*(.35+cylindrical*.65),birch*.6*(1.-burn*.5));
+ float ember=(fissure*.9+cross*.5)*burn*pulse*(.25+uFire*.65);ember*=smoothstep(.16,.65,char+.25);float top=smoothstep(-r*.6,r*.8,q.y);
+ bark*=.5+uRoom*.5+uLight*(.7+top*2.5);bark+=vec3(2.4,.20,.006)*ember+vec3(.38,.024,.001)*pow(grain,3.)*burn*top;
+ // Elliptical cut ends have growth rings, radial cracks and a burnt rim.
+ vec2 endQ=vec2((q.x-len)/endWidth,q.y/r);float endD=length(endQ);if(endD<1.){float rings=.5+.5*sin(endD*37.+noise(endQ*5.+seed)*3.);float crack=pow(abs(sin(atan(endQ.y,endQ.x)*5.+seed)),28.)*smoothstep(.2,1.,endD);vec3 cut=vec3(.15,.068,.024)*(.5+rings*.5)*( .6+uLight);cut*=1.-crack*.88;cut=mix(cut,vec3(.017,.009,.005),smoothstep(.78,1.,endD));cut+=vec3(1.,.11,.005)*crack*.17*pulse;bark=mix(bark,cut,.95);}
+ return mix(col,bark,cover);
+}
+vec3 logs(vec3 col,vec2 p){
+ for(int i=0;i<6;i++){float fi=float(i),on=smoothstep(fi+.05,fi+.95,uLogs);if(on<.001)continue;
+ vec2 a,b;float r;
+ if(i==0){a=vec2(-.87,.27);b=vec2(.68,.24);r=.115;}
+ else if(i==1){a=vec2(-.45,.29);b=vec2(.87,.41);r=.120;}
+ else if(i==2){a=vec2(-.91,.41);b=vec2(.40,.50);r=.123;}
+ else if(i==3){a=vec2(-.34,.57);b=vec2(.80,.47);r=.108;}
+ else if(i==4){a=vec2(-.76,.56);b=vec2(.12,.66);r=.102;}
+ else {a=vec2(-.29,.70);b=vec2(.69,.61);r=.100;}
+ float spread=.77+.045*uLogs;a.x*=spread;b.x*=spread;col=logPiece(col,p,a,b,r,3.+fi*13.21,on);
+ }
+ return col;
+}
+vec3 flame(vec2 p,float layer){
+ float power=uFire;if(power<.007)return vec3(0);float H=.13+power*(1.18+.065*uLogs);float W=.34+.1*uLogs;float base=.29+layer*.07;float y=(p.y-base)/H;if(y<-.07||y>1.32||abs(p.x)>W+.5)return vec3(0);
+ float speed=1.+uWoodMix.y*.45;float t=uTime*speed;float wind=uDraft*(.17+.14*sin(t*.39)+.1*sin(t*.71));
+ vec2 q=vec2(p.x/W,y);q.x-=wind*y;float warp=fbm(vec2(q.x*2.7+layer*9.,y*2.-t*.54));q.x+=(warp-.48)*(.16+.57*max(y,0.))*(.75+uDraft);
+ q.y+=(noise(vec2(q.x*3.9+17.,y*4.-t*.81))-.5)*.16;
+ float n=fbm(vec2(q.x*6.4+layer*14.7,q.y*4.5-t*1.26));float detail=noise(vec2(q.x*29.+noise(vec2(y*8.,t*.5))*2.,y*15.-t*3.4));float strongest=0.,density=0.;
+ for(int i=0;i<9;i++){float fi=float(i);float rnd=hash(fi+layer*71.+3.);float foot=(fi-4.)*.205;
+ float ht=(.47+.49*hash(fi*7.9+6.+layer*18.))*(.84+.19*sin(t*(1.32+rnd)+fi*3.));ht*=1.-.28*abs(foot);
+ float yy=q.y/ht;float bend=sin(yy*5.8-t*(1.9+rnd)+fi*2.)*(.035+yy*.11)+sin(yy*13.-t*2.7+fi)*.027*yy;
+ float center=foot+bend+(.5-rnd)*yy*.22;float width=(.115+.065*rnd)*pow(max(0.,1.-yy),.62);
+ float d=abs(q.x-center);float body=1.-d/max(width,.004);body+=(n-.46)*1.7+(detail-.5)*.17;body*=(1.-smoothstep(.85,1.08,yy));body*=smoothstep(-.08,.12,yy);body=max(body,0.);density+=body*.45;strongest=max(strongest,body);
+ }
+ float f=strongest*.76+density*.24;f*=.8+.32*detail;float edge=smoothstep(.035,.16,f);float heat=clamp(f*.87+power*.10-y*.35,0.,1.);vec3 c=temperature(heat);
+ c*=1.+uWoodMix.y*.18;c=mix(c,c*vec3(.88,1.12,.77),uWoodMix.z);c=mix(c,mix(c*vec3(.12,.76,1.8),c*vec3(.22,1.25,.4),smoothstep(.1,.75,n)),uWoodMix.w*.72);
+ float blue=exp(-pow((y-.075)*20.,2.))*smoothstep(.12,.4,f)*(.3+.7*n);c=c*edge*(.62+.38*power)+vec3(.015,.12,.52)*blue;
+ return c*(uLight/(.22+power*.85));
+}
+vec3 particles(vec2 p){
+ vec3 c=vec3(0);if(uSparks<.001)return c;
+ for(int i=0;i<38;i++){float fi=float(i);float seed=fi*17.13;float dur=2.2+hash(seed)*2.7;float age=mod(uTime+hash(seed+2.)*dur,dur);float epoch=floor((uTime+hash(seed+2.)*dur)/dur);float rnd=hash(seed+epoch*13.1);float show=smoothstep(fi/38.,fi/38.+.035,uSparks)*smoothstep(.01,.14,uFire);float x=(rnd-.5)*( .6+uLogs*.18);float vy=.19+hash(seed+7.)*.32;vec2 at=vec2(x+sin(age*2.+seed)*.035+uDraft*age*.15,.42+age*vy);at.x+=sin(age*3.1+seed)*age*.025;
+ vec2 d=p-at;d.x*=1.8;float r=.0025+hash(seed+10.)*.002;float ember=exp(-dot(d,d)/(r*r));float halo=exp(-dot(d,d)/(r*r*13.));float fade=pow(max(0.,1.-age/dur),1.6)*smoothstep(0.,.18,age)*show;c+=vec3(3.,.63,.045)*(ember+halo*.12)*fade;}
+ for(int j=0;j<6;j++){vec4 pop=uPops[j];float age=uTime-pop.x;if(age<0.||age>2.4||pop.w<.01)continue;for(int i=0;i<7;i++){float seed=float(i)*9.7+pop.z;float vx=(hash(seed)-.5)*.7;float vy=.3+hash(seed+1.)*.65;vec2 at=vec2(pop.y+vx*age+uDraft*age*.14,.4+age*vy-.10*age*age);vec2 d=p-at;d.x*=1.5;float r=.003+hash(seed+2.)*.002;float v=exp(-dot(d,d)/(r*r))+.1*exp(-dot(d,d)/(r*r*15.));c+=vec3(3.8,.78,.08)*v*max(0.,1.-age/2.4)*uSparks*pop.w;}}
+ return c;
+}
+void main(){
+ float aspect=uResolution.x/uResolution.y;float viewH=max(2.7,2.65/aspect);vec2 p=(gl_FragCoord.xy-.5*uResolution)/uResolution.y*viewH+vec2(0,1.02);
+ // Refract the fireback very slightly in the column of hot air.
+ vec2 bg=p;float shimmer=exp(-pow(p.x*.9,2.))*smoothstep(.6,1.,p.y)*(1.-smoothstep(1.7,2.2,p.y))*uFire;bg.x+=(noise(vec2(p.x*11.,p.y*13.-uTime*2.5))-.5)*.012*shimmer;
+ vec3 col=hearth(bg);
+ float bed=exp(-pow(p.x/(.42+uLogs*.1),6.)-pow((p.y-.22)*15.,2.));float coal=pow(noise(p*vec2(42.,66.)),3.);float breath=.76+.16*sin(uTime*1.7+p.x*4.)+.08*sin(uTime*.73-p.x*9.);col+=vec3(1.3,.105,.004)*bed*coal*breath*(.36+uFire*.75);
+ if(abs(p.x)<1.38&&p.y>.17&&p.y<1.94){float smoke=fbm(vec2(p.x*4.+sin(p.y*2.-uTime*.2)*.5,p.y*3.-uTime*.16));float sm=pow(smoke,2.2)*smoothstep(.65,1.1,p.y)*(1.-smoothstep(1.4,1.96,p.y))*exp(-p.x*p.x*3.)*(.02+uFire*.08)*(1.-uWoodMix.z*.65);col+=vec3(.35,.29,.24)*sm;
+ col+=flame(p,1.)*.65;col=logs(col,p);vec3 front=flame(p+vec2(.025,-.035),0.);float above=smoothstep(.37,.70,p.y);col+=front*mix(.016,.88,above);
+ float blueBase=.46+.025*sin(p.x*14.+uTime*2.)+.012*sin(p.x*31.-uTime*4.);float blueGlow=exp(-pow((p.y-blueBase)*44.,2.)-pow(p.x/(.4+uLogs*.07),8.))*noise(vec2(p.x*28.,uTime*2.))*uFire;col+=vec3(.006,.033,.18)*blueGlow;
+ col+=particles(p);}
+ // The front rail and forged vertical teeth of the grate.
+ float rail=line(p,vec2(-1.04,.16),vec2(1.04,.16));float feet=min(line(p,vec2(-.83,.18),vec2(-.9,.065)),line(p,vec2(.83,.18),vec2(.9,.065)));float bars=10.;for(int i=0;i<7;i++){float x=(float(i)-3.)*.31;bars=min(bars,line(p,vec2(x,.16),vec2(x*.95,.34)));}
+ float metal=min(min(rail-.024,feet-.027),bars-.014);float mask=1.-smoothstep(-.003,.003,metal);vec3 iron=vec3(.009,.007,.005)+vec3(.055,.018,.003)*uLight*smoothstep(-.02,0.,metal);col=mix(col,iron,mask);
+ float vignette=1.-.28*pow(length((gl_FragCoord.xy/uResolution-.5)*vec2(1.1,.8)),1.2);col*=vignette;
+ // Filmic highlight rolloff preserves hot yellow cores without washing out the blacks.
+ col=vec3(1.)-exp(-col*1.24);col=pow(max(col,0.),vec3(.86));fragColor=vec4(col,1);
+}
+</script>
+<script>
+'use strict';
+(() => {
+const $=id=>document.getElementById(id);
+const defaults={size:57,logs:4,crackle:42,material:1,wood:0,draft:22,sparks:36,room:18,volume:55,mute:false,burn:false,fuel:1};
+const presets={roaring:{size:96,logs:6,crackle:78,draft:57,sparks:73},cozy:{size:57,logs:4,crackle:42,draft:22,sparks:36},embers:{size:3,logs:3,crackle:12,draft:9,sparks:7}};
+const ranges={size:[0,100],logs:[1,6],crackle:[0,100],material:[0,4],wood:[0,3],draft:[0,100],sparks:[0,100],room:[0,100],volume:[0,100],fuel:[0,1]};
+let state={...defaults},started=false,simTime=Math.random()*400,lastFrame=0,raf=0,hiddenAt=0,wake=null,audio=null,hashTimer=0,idleTimer=0,toastTimer=0,manualHidden=true;
+let smooth={...defaults,fire:.035},woodMix=[1,0,0,0],renderScale=1,frameMean=16.67,measureFrames=0,lastQuality=0,popIndex=0,popWait=1,lightEnergy=.3;
+const pops=new Float32Array(24);for(let i=0;i<6;i++)pops[i*4]=-100;
+function readHash(){let next={...defaults};try{const raw=decodeURIComponent(location.hash.slice(1));if(raw){const data=JSON.parse(raw);for(const [key,limits] of Object.entries(ranges)){if(typeof data[key]==='number'&&Number.isFinite(data[key]))next[key]=Math.min(limits[1],Math.max(limits[0],data[key]));}for(const k of ['mute','burn'])if(typeof data[k]==='boolean')next[k]=data[k];}}catch{}next.logs=Math.round(next.logs);next.wood=Math.round(next.wood);next.material=Math.round(next.material);state=next;}
+function writeHash(){clearTimeout(hashTimer);try{const s={...state,fuel:Math.round(state.fuel*10000)/10000};history.replaceState(null,'','#'+encodeURIComponent(JSON.stringify(s)));}catch{}}
+function queueHash(){clearTimeout(hashTimer);hashTimer=setTimeout(writeHash,180);}
+function refreshControls(){for(const key of Object.keys(ranges)){if($(key))$(key).value=state[key];} $('burn').checked=state.burn;updateOutputs();updatePreset();}
+function updateOutputs(){for(const key of ['size','logs','crackle','draft','sparks','room','volume']){const el=$(key);el.style.setProperty('--fill',((state[key]-Number(el.min))/(Number(el.max)-Number(el.min))*100)+'%');$(key+'Value').textContent=key==='logs'?state[key]+(state[key]===1?' log':' logs'):key==='size'&&state[key]===0?'Embers':key==='volume'&&state.mute?'Muted':state[key]+'%';}const mute=$('mute');mute.setAttribute('aria-pressed',String(state.mute));mute.setAttribute('aria-label',state.mute?'Unmute':'Mute');mute.title=(state.mute?'Unmute':'Mute')+' (M)';mute.style.opacity=state.mute?'.45':'1';$('burnInfo').textContent=state.burn?(state.fuel<.01?'Only embers remain. Add a log to rekindle.':'About '+Math.max(1,Math.ceil(state.fuel*burnDuration()/60))+' minutes to embers. Add wood to keep it going.'):'Keep it burning, or let it settle into embers.';}
+function updatePreset(){document.querySelectorAll('[data-preset]').forEach(b=>b.classList.toggle('active',Object.entries(presets[b.dataset.preset]).every(([k,v])=>state[k]===v)));}
+function burnDuration(){return (24+state.logs*1.5)*60*[1.06,.86,1.,.97][state.wood];}
+function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3500);}
+function showPanel(show){manualHidden=!show;document.body.classList.toggle('panel-hidden',!show);syncPanel();}
+function syncPanel(){const visible=started&&!manualHidden&&!document.body.classList.contains('idle');$('panel').inert=!visible;$('togglePanel').setAttribute('aria-expanded',String(visible));}
+function wakeUI(){document.body.classList.remove('idle');syncPanel();clearTimeout(idleTimer);if(started)idleTimer=setTimeout(()=>{if(document.pointerLockElement)return;if($('panel').contains(document.activeElement))document.activeElement.blur();document.body.classList.add('idle');syncPanel();},4800);}
+readHash();smooth={...state,fire:.035};woodMix=woodMix.map((_,i)=>i===state.wood?1:0);refreshControls();
+const canvas=$('fire');const gl=canvas.getContext('webgl2',{alpha:false,antialias:false,depth:false,stencil:false,powerPreference:'high-performance',preserveDrawingBuffer:false});
+function fail(message){$('errorMessage').textContent=message;$('error').classList.add('visible');}
+if(!gl){fail('Please open this page in a browser with WebGL 2 enabled. Chrome, Edge, Firefox and Safari on a recent device can keep the fire burning.');return;}
+function compile(kind,source){const shader=gl.createShader(kind);gl.shaderSource(shader,source);gl.compileShader(shader);if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS)){const info=gl.getShaderInfoLog(shader);gl.deleteShader(shader);throw Error(info);}return shader;}
+let program,uniforms={};
+function initGL(){const vs=compile(gl.VERTEX_SHADER,'#version 300 es\nvoid main(){vec2 p=vec2((gl_VertexID<<1)&2,gl_VertexID&2);gl_Position=vec4(p*2.-1.,0.,1.);}');const fs=compile(gl.FRAGMENT_SHADER,$('flameShader').textContent);program=gl.createProgram();gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);gl.deleteShader(vs);gl.deleteShader(fs);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));gl.useProgram(program);for(const key of ['Resolution','Time','Fire','Logs','Draft','Sparks','Room','Light','Material','Wood','WoodMix','Pops[0]'])uniforms[key]=gl.getUniformLocation(program,'u'+key);canvas.dataset.shader='compiled';resize();}
+try{initGL();}catch(e){console.error('Fire shader:',e);fail('The fire could not start on this graphics device. Try updating your browser or enabling hardware acceleration.');return;}
+function resize(){const dpr=Math.min(devicePixelRatio||1,1.5);const w=innerWidth,h=innerHeight;const budget=Math.min(1,Math.sqrt(1100000/(w*h*dpr*dpr)));canvas.width=Math.max(1,Math.round(w*dpr*budget*renderScale));canvas.height=Math.max(1,Math.round(h*dpr*budget*renderScale));gl.viewport(0,0,canvas.width,canvas.height);}
+window.addEventListener('resize',resize);canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();cancelAnimationFrame(raf);toast('The fire is resting while the graphics device recovers.');});canvas.addEventListener('webglcontextrestored',()=>{try{initGL();lastFrame=0;raf=requestAnimationFrame(frame);}catch(e){fail('Please reload to relight the fire.');}});
+
+// Streaming random noise is generated in an AudioWorklet, so the fire has no audio loop.
+const noiseProcessor=`class HearthNoise extends AudioWorkletProcessor{constructor(){super();this.brown=0;this.smooth=0;}process(inputs,outputs){const out=outputs[0];for(let i=0;i<out[0].length;i++){const w=Math.random()*2-1;this.brown=(this.brown+.023*w)/1.023;this.smooth+=.075*(w-this.smooth);out[0][i]=this.brown*3.5;if(out[1])out[1][i]=this.smooth*2.;}return true;}}registerProcessor('hearth-noise',HearthNoise);`;
+async function startAudio(){if(audio){if(audio.ctx.state==='suspended')await audio.ctx.resume();return;}
+ const AC=window.AudioContext||window.webkitAudioContext;if(!AC){toast('This browser can show the fire, but cannot play its sound.');return;}
+ const ctx=new AC();await ctx.resume();const master=ctx.createGain();master.gain.value=0;const compressor=ctx.createDynamicsCompressor();compressor.threshold.value=-14;compressor.knee.value=18;compressor.ratio.value=4;compressor.attack.value=.003;compressor.release.value=.25;master.connect(compressor).connect(ctx.destination);
+ const roarFilter=ctx.createBiquadFilter();roarFilter.type='lowpass';roarFilter.frequency.value=320;roarFilter.Q.value=.45;const rumbleCut=ctx.createBiquadFilter();rumbleCut.type='highpass';rumbleCut.frequency.value=35;const roarGain=ctx.createGain();roarGain.gain.value=0;roarFilter.connect(rumbleCut).connect(roarGain).connect(master);
+ const hissFilter=ctx.createBiquadFilter();hissFilter.type='highpass';hissFilter.frequency.value=1900;const hissGain=ctx.createGain();hissGain.gain.value=0;hissFilter.connect(hissGain).connect(master);
+ let source,blobURL;
+ try{if(!ctx.audioWorklet)throw Error('AudioWorklet unavailable');blobURL=URL.createObjectURL(new Blob([noiseProcessor],{type:'text/javascript'}));await ctx.audioWorklet.addModule(blobURL);source=new AudioWorkletNode(ctx,'hearth-noise',{numberOfOutputs:1,outputChannelCount:[2]});const split=ctx.createChannelSplitter(2);source.connect(split);split.connect(roarFilter,0);split.connect(hissFilter,1);}
+ catch{ // Older TV browsers can synthesize the same fresh noise on the main thread.
+ source=ctx.createScriptProcessor(4096,0,2);let brown=0;source.onaudioprocess=e=>{const l=e.outputBuffer.getChannelData(0),r=e.outputBuffer.getChannelData(1);for(let i=0;i<l.length;i++){const w=Math.random()*2-1;brown=(brown+.023*w)/1.023;l[i]=brown*3.5;r[i]=w*.25;}};const split=ctx.createChannelSplitter(2);source.connect(split);split.connect(roarFilter,0);split.connect(hissFilter,1);}
+ finally{if(blobURL)URL.revokeObjectURL(blobURL);}
+ audio={ctx,master,roarGain,roarFilter,hissGain,source};
+}
+function audioUpdate(){if(!audio||audio.ctx.state!=='running')return;const a=audio,t=a.ctx.currentTime;const f=smooth.fire;const swell=.88+.08*Math.sin(simTime*.71)+.04*Math.sin(simTime*1.83);a.master.gain.setTargetAtTime(state.mute?0:Math.pow(smooth.volume/100,1.5)*.7,t,.15);a.roarGain.gain.setTargetAtTime((.025+Math.pow(f,1.25)*.75)*swell,t,.15);a.roarFilter.frequency.setTargetAtTime(130+f*470,t,.22);a.hissGain.gain.setTargetAtTime(woodMix[1]*f*.08,t,.25);}
+function popSound(strength,x){if(!audio||state.mute||audio.ctx.state!=='running')return;const ctx=audio.ctx,t=ctx.currentTime;const duration=.035+Math.random()*.18;const count=Math.ceil(ctx.sampleRate*duration);const buffer=ctx.createBuffer(1,count,ctx.sampleRate);const data=buffer.getChannelData(0);let low=0;for(let i=0;i<count;i++){const w=Math.random()*2-1;low+=.35*(w-low);data[i]=(.6*w+.4*low)*Math.exp(-i/count*(5+strength*2));}const source=ctx.createBufferSource();source.buffer=buffer;const filter=ctx.createBiquadFilter();filter.type='bandpass';filter.frequency.value=600+Math.random()*3100;filter.Q.value=.5+Math.random()*.9;const gain=ctx.createGain();gain.gain.setValueAtTime(.001,t);gain.gain.linearRampToValueAtTime(strength*(.09+smooth.crackle/100*.5),t+.0015);gain.gain.exponentialRampToValueAtTime(.0001,t+duration);source.connect(filter).connect(gain);let pan;if(ctx.createStereoPanner){pan=ctx.createStereoPanner();pan.pan.value=Math.max(-.8,Math.min(.8,x*.6));gain.connect(pan).connect(audio.master);}else gain.connect(audio.master);source.start(t);source.stop(t+duration+.02);source.onended=()=>{source.disconnect();filter.disconnect();gain.disconnect();if(pan)pan.disconnect();};
+ if(strength>.65){const osc=ctx.createOscillator(),g=ctx.createGain();osc.type='triangle';osc.frequency.setValueAtTime(100+Math.random()*120,t);osc.frequency.exponentialRampToValueAtTime(45,t+.08);g.gain.setValueAtTime(strength*.14,t);g.gain.exponentialRampToValueAtTime(.0001,t+.10);osc.connect(g).connect(audio.master);osc.start(t);osc.stop(t+.11);osc.onended=()=>{osc.disconnect();g.disconnect();};}}
+function pop(){const x=(Math.random()-.5)*(.6+smooth.logs*.13);const strength=.2+Math.pow(Math.random(),2)*.8;popSound(strength,x);pops.set([simTime,x,Math.random()*100,strength],popIndex*4);popIndex=(popIndex+1)%6;}
+async function requestWake(){if(!started||document.hidden||!('wakeLock'in navigator)||wake)return;try{const handle=await navigator.wakeLock.request('screen');wake=handle;handle.addEventListener('release',()=>{if(wake===handle)wake=null;});}catch{}}
+function burnFor(seconds){if(started&&state.burn){state.fuel=Math.max(0,state.fuel-seconds/burnDuration());}}
+let lastInfo=0,lastHash=0;
+function frame(now){if(document.hidden)return;const raw=lastFrame?(now-lastFrame)/1000:1/60;lastFrame=now;const dt=Math.min(raw,.1);simTime+=dt;burnFor(raw);const ease=1-Math.exp(-dt*3.2);for(const k of ['size','logs','crackle','draft','sparks','room','volume','material'])smooth[k]+=(state[k]-smooth[k])*ease;for(let i=0;i<4;i++)woodMix[i]+=((i===state.wood?1:0)-woodMix[i])*ease;
+ const fuel=state.burn?Math.pow(state.fuel,.78):1;const target=started?(state.size/100*fuel):.035;smooth.fire+=(target-smooth.fire)*(1-Math.exp(-dt*(started?1.05:3.)));
+ lightEnergy=(.22+smooth.fire*.85)*( .88+.065*Math.sin(simTime*7.1)+.04*Math.sin(simTime*13.77)+.035*Math.sin(simTime*3.21));
+ if(started){const rate=(.12+smooth.fire*3.6)*(smooth.crackle/100)*(1+woodMix[1]*1.6);popWait-=dt*rate;if(popWait<=0&&rate>.001){pop();popWait=-Math.log(Math.max(.001,Math.random()));}audioUpdate();}
+ gl.useProgram(program);gl.uniform2f(uniforms.Resolution,canvas.width,canvas.height);gl.uniform1f(uniforms.Time,simTime);gl.uniform1f(uniforms.Fire,smooth.fire);gl.uniform1f(uniforms.Logs,smooth.logs);gl.uniform1f(uniforms.Draft,smooth.draft/100);gl.uniform1f(uniforms.Sparks,smooth.sparks/100);gl.uniform1f(uniforms.Room,smooth.room/100);gl.uniform1f(uniforms.Light,lightEnergy);gl.uniform1f(uniforms.Material,state.material);gl.uniform4fv(uniforms.WoodMix,woodMix);gl.uniform4fv(uniforms['Pops[0]'],pops);gl.drawArrays(gl.TRIANGLES,0,3);
+ if(raw<.15){frameMean=frameMean*.96+raw*1000*.04;measureFrames++;}if(measureFrames>100&&now-lastQuality>3500){if(frameMean>20.5&&renderScale>.38){renderScale=Math.max(.38,renderScale*.84);resize();lastQuality=now;}else if(frameMean<17.3&&renderScale<1&&now-lastQuality>15000){renderScale=Math.min(1,renderScale*1.06);resize();lastQuality=now;}measureFrames=0;}
+ if(now-lastInfo>1200){updateOutputs();lastInfo=now;}if(state.burn&&started&&now-lastHash>15000){queueHash();lastHash=now;}raf=requestAnimationFrame(frame);
+}
+raf=requestAnimationFrame(frame);
+$('light').addEventListener('click',async()=>{if(started)return;started=true;document.querySelector('.top-actions').inert=false;document.body.classList.add('started');$('gate').classList.add('lit');$('light').blur();showPanel(true);wakeUI();requestWake();writeHash();try{await startAudio();}catch{toast('The fire is lit. Tap the sound button to try audio again.');}});
+for(const key of Object.keys(ranges)){const el=$(key);if(!el)continue;el.addEventListener('input',()=>{state[key]=Number(el.value);updateOutputs();updatePreset();queueHash();wakeUI();});}
+$('burn').addEventListener('change',()=>{state.burn=$('burn').checked;updateOutputs();queueHash();});
+$('addLog').addEventListener('click',()=>{state.logs=Math.min(6,state.logs+1);state.fuel=Math.min(1,state.fuel+.3);state.size=Math.max(state.size,45);refreshControls();queueHash();pop();toast(state.logs===6?'Fresh wood on the fire.':'A fresh log on the fire.');});
+document.querySelectorAll('[data-preset]').forEach(button=>button.addEventListener('click',()=>{Object.assign(state,presets[button.dataset.preset],{fuel:1});refreshControls();queueHash();}));
+function toggleMute(){state.mute=!state.mute;updateOutputs();queueHash();if(started)startAudio().catch(()=>toast('Sound is unavailable in this browser.'));toast(state.mute?'Sound off':'Sound on');}
+$('mute').addEventListener('click',toggleMute);
+$('togglePanel').addEventListener('click',()=>{showPanel(manualHidden);wakeUI();});$('closePanel').addEventListener('click',()=>{showPanel(false);$('togglePanel').focus();});
+async function fullscreen(){try{if(document.fullscreenElement){await document.exitFullscreen();}else if(document.documentElement.requestFullscreen){await document.documentElement.requestFullscreen();}else if(document.documentElement.webkitRequestFullscreen){document.documentElement.webkitRequestFullscreen();}else{toast('Use your browser’s fullscreen or Add to Home Screen option.');}}catch{toast('Fullscreen is unavailable here. Try your browser’s fullscreen option.');}}
+$('fullscreen').addEventListener('click',fullscreen);
+$('copy').addEventListener('click',async()=>{writeHash();try{await navigator.clipboard.writeText(location.href);toast('Link copied. This fire is yours to share.');}catch{const field=document.createElement('textarea');field.value=location.href;field.style.cssText='position:fixed;left:0;top:0;opacity:0';document.body.append(field);field.select();const ok=document.execCommand('copy');field.remove();toast(ok?'Link copied. This fire is yours to share.':'Copy the address bar to share this fire.');}});
+$('copyTop').addEventListener('click',()=>$('copy').click());
+window.addEventListener('hashchange',()=>{readHash();refreshControls();});
+window.addEventListener('keydown',e=>{wakeUI();if(e.ctrlKey||e.metaKey||e.altKey||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key.toLowerCase()==='f'){e.preventDefault();fullscreen();}else if(e.key.toLowerCase()==='h'){e.preventDefault();showPanel(manualHidden);}else if(e.key.toLowerCase()==='m'){e.preventDefault();toggleMute();}else if(e.key==='Escape')showPanel(false);});
+window.addEventListener('pointermove',wakeUI,{passive:true});window.addEventListener('pointerdown',wakeUI,{passive:true});window.addEventListener('touchstart',wakeUI,{passive:true});
+canvas.addEventListener('click',()=>{if(started&&manualHidden){showPanel(true);wakeUI();}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf);hiddenAt=Date.now();if(audio)audio.ctx.suspend().catch(()=>{});if(wake){const handle=wake;wake=null;handle.release().catch(()=>{});}writeHash();}else{if(hiddenAt){burnFor(Math.max(0,(Date.now()-hiddenAt)/1000));hiddenAt=0;}lastFrame=0;frameMean=16.67;measureFrames=0;raf=requestAnimationFrame(frame);if(started){requestWake();if(audio)audio.ctx.resume().catch(()=>{});}wakeUI();}});
+})();
+</script>
+</body>
+</html>
